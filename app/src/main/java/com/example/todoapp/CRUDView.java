@@ -58,6 +58,8 @@ public class CRUDView extends AppCompatActivity {
 
     public void DeleteTask() {
 
+        MainActivity.removetask();
+
         Intent explicitIntent = new Intent(CRUDView.this, MainActivity.class);
         explicitIntent.putExtra(Intent.EXTRA_TEXT, "Diese Daten empfängt die andere Activity.");
         startActivity(explicitIntent);

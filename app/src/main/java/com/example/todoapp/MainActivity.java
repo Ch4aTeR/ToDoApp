@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     static ArrayAdapter adapter;
     CRUDView crud = new CRUDView();
 
+    static int selectedTask = 0;
+
     public static void AddNewTask(String name, String date, String time) {
 
         if (keyList.contains(name)) {
@@ -69,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Task dataObject = tasks.get(keyList.get(position));
+                selectedTask = position;
 
                 String key = dataObject.getName();
                 String name = tasks.get(key).getName();
@@ -83,5 +86,10 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+
+    } public static void removetask(){
+        tasks.remove(keyList.get(selectedTask));
+        keyList.remove(selectedTask);
     }
 }
