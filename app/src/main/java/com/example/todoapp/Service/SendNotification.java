@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Process;
+import android.telephony.SmsManager;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
@@ -22,6 +23,7 @@ public class SendNotification extends Service {
     private static final String CHANNEL_NAME = "Default Channel";
 
     private NotificationManager notificationManager;
+    SmsManager smgr = SmsManager.getDefault();
 
     // This method run only one time. At the first time of service created and running
     @Override
@@ -37,6 +39,7 @@ public class SendNotification extends Service {
 
         for (Task item : tasks.values()) {
             if (item.getTime().equals(LocalDateTime.now())) {
+                smgr.sendTextMessage("0796650372",null,"Come and do your Task now!!",null,null);
 
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                         .setContentTitle("ToDo App")
