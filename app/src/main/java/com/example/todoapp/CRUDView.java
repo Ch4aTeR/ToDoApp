@@ -10,8 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class CRUDView extends AppCompatActivity {
-
-    public static final String EXTRA_DATA = "com.example.myapp.DATA";
     static String name;
     static String date;
     static String time;
@@ -44,24 +42,17 @@ public class CRUDView extends AppCompatActivity {
 
     public void CreateNewTask() {
         Intent explicitIntent = new Intent(CRUDView.this, MainActivity.class);
-        explicitIntent.putExtra(Intent.EXTRA_TEXT, "Diese Daten empfängt die andere Activity.");
         startActivity(explicitIntent);
         name = nameInput.getText().toString();
         date = dateInput.getText().toString();
         time = timeInput.getText().toString();
         MainActivity.AddNewTask(name, date, time);
-
-        nameInput.setText("");
-        dateInput.setText("");
-        timeInput.setText("");
     }
 
     public void DeleteTask() {
-
-        MainActivity.removetask();
+        MainActivity.removeTask();
 
         Intent explicitIntent = new Intent(CRUDView.this, MainActivity.class);
-        explicitIntent.putExtra(Intent.EXTRA_TEXT, "Diese Daten empfängt die andere Activity.");
         startActivity(explicitIntent);
     }
 
@@ -69,7 +60,6 @@ public class CRUDView extends AppCompatActivity {
         nameInput.setText(name);
         dateInput.setText(date);
         timeInput.setText(time);
-
 
     }
 }

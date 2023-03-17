@@ -21,9 +21,8 @@ import java.time.LocalDateTime;
 public class SendNotification extends Service {
     private static final String CHANNEL_ID = "defaultChannel";
     private static final String CHANNEL_NAME = "Default Channel";
-
-    private NotificationManager notificationManager;
     SmsManager smgr = SmsManager.getDefault();
+    private NotificationManager notificationManager;
 
     // This method run only one time. At the first time of service created and running
     @Override
@@ -39,7 +38,7 @@ public class SendNotification extends Service {
 
         for (Task item : tasks.values()) {
             if (item.getTime().equals(LocalDateTime.now())) {
-                smgr.sendTextMessage("0796650372",null,"Come and do your Task now!!",null,null);
+                smgr.sendTextMessage("0796650372", null, "Come and do your Task now!!", null, null);
 
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                         .setContentTitle("ToDo App")

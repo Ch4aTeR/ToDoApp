@@ -1,10 +1,6 @@
 package com.example.todoapp;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,7 +9,6 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
 
 import com.example.todoapp.Service.AlarmReceiver;
 
@@ -26,9 +21,8 @@ public class MainActivity extends AppCompatActivity {
     public static HashMap<String, Task> tasks = new HashMap<>();
     static List<String> keyList = new ArrayList<>(tasks.keySet());
     static ArrayAdapter adapter;
-    CRUDView crud = new CRUDView();
-
     static int selectedTask = 0;
+    CRUDView crud = new CRUDView();
 
     public static void AddNewTask(String name, String date, String time) {
 
@@ -44,6 +38,11 @@ public class MainActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
+    public static void removeTask() {
+        tasks.remove(keyList.get(selectedTask));
+        keyList.remove(selectedTask);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,11 +53,10 @@ public class MainActivity extends AppCompatActivity {
 
         AlarmReceiver alarm = new AlarmReceiver();
 
-                alarm.setAlarm(this);
+        alarm.setAlarm(this);
 
         createTaskButton.setOnClickListener(view -> {
             Intent explicitIntent = new Intent(MainActivity.this, CRUDView.class);
-            explicitIntent.putExtra(Intent.EXTRA_TEXT, "Diese Daten empfängt die andere Activity.");
             startActivity(explicitIntent);
         });
 
@@ -70,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Intent explicitIntent = new Intent(MainActivity.this, CRUDView.class);
+                startActivity(explicitIntent);
                 Task dataObject = tasks.get(keyList.get(position));
                 selectedTask = position;
 
@@ -78,18 +78,8 @@ public class MainActivity extends AppCompatActivity {
                 String date = tasks.get(key).getDate();
                 String time = tasks.get(key).getTime();
 
-                Intent intent = new Intent(MainActivity.this, CRUDView.class);
-                startActivity(intent);
-
                 crud.UpdateTask(name, date, time);
-
-
             }
         });
-
-
-    } public static void removetask(){
-        tasks.remove(keyList.get(selectedTask));
-        keyList.remove(selectedTask);
     }
 }
