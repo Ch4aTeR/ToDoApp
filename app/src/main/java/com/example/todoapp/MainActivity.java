@@ -11,7 +11,11 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.todoapp.Service.AlarmReceiver;
+import com.google.gson.Gson;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,6 +27,11 @@ public class MainActivity extends AppCompatActivity {
     static ArrayAdapter adapter;
     static int selectedTask = 0;
     CRUDView crud = new CRUDView();
+
+    private static String serializeTaskToJson(Task task) {
+        Gson gson = new Gson();
+        return gson.toJson(task);
+    }
 
     public static void AddNewTask(String name, String date, String time) {
 
@@ -36,6 +45,17 @@ public class MainActivity extends AppCompatActivity {
             tasks.put(name, new Task(name, date, time));
         }
         adapter.notifyDataSetChanged();
+
+        String json = serializeTaskToJson(new Task(name, date, time));
+        File file = new File("D:\\Documents\\ToDoApp\\app\\src\\main\\res\\Files", "D:\\Documents\\ToDoApp\\app\\src\\main\\res\\Files\\tasks.json");
+        try {
+            FileWriter writer = new FileWriter(file, true);
+            writer.write(json + "\n");
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public static void removeTask() {
